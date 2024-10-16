@@ -22,7 +22,7 @@ public class Partie {
     }
 
     public static Partie create(Joueur joueur, String motADeviner, int nbEssais) {
-        return new Partie(joueur, motADeviner, nbEssais, false);
+        return new Partie(joueur, motADeviner, nbEssais, false );
     }
 
     // getter joueur
@@ -48,30 +48,34 @@ public class Partie {
     public Reponse tourDeJeu(String motPropose) {
         nbEssais++; //on incrémente le nombre d'essais
         Reponse reponse = new Reponse(motADeviner);
-        verifieNbEssais();
-        if (!partieTerminee) { //si le nb d'essais est inferieur au nb d'essais max
+        //verifieNbEssais();
+        if (!isTerminee() ){ //si le nb d'essais est inferieur au nb d'essais max
             reponse.compare(motPropose); // on compare la proposition au mot secret
             if (reponse.lettresToutesPlacees()) { //si toutes les lettres sont correctement placées
-                done(); //on termine la partie
+                partieTerminee = true;
+                //done(); //on termine la partie
             }
         }
         return reponse;
     }
 
     // vérifie que le nombre d'essais max n'est pas atteint
-    private void verifieNbEssais() {
-        if (nbEssais >= NB_ESSAIS_MAX) {
-            partieTerminee =true;
-        }
-    }
+//    private void verifieNbEssais() {
+//        if (nbEssais >= NB_ESSAIS_MAX) {
+//            partieTerminee =true;
+//        }
+//    }
 
     // la partie est-elle terminée
     public boolean isTerminee() {
-        return this.partieTerminee;
+        if (nbEssais >= NB_ESSAIS_MAX) {
+            partieTerminee =true;
+        }
+        return partieTerminee;
     }
 
     // la partie est terminée
-    void done() {
-        this.partieTerminee = true;
-    }
+//    void done() {
+//        this.partieTerminee = true;
+//    }
 }

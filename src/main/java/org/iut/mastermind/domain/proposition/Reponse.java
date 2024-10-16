@@ -7,7 +7,7 @@ import static java.util.Collections.unmodifiableList;
 public class Reponse {
     private final String motSecret;
     private final List<Lettre> resultat = new ArrayList<>();
-    private int position;
+    //private int position;
 
     public Reponse(String mot) {
         this.motSecret = mot;
@@ -27,9 +27,9 @@ public class Reponse {
                 resultat.add(Lettre.INCORRECTE);
         }
 
-        for(position = 0; position < motSecret.length(); position++) {
-            Lettre lettre = evaluationCaractere(essai.charAt(position)); //on évalue le caractère pour le statut de la lettre
-            resultat.set(position,lettre); //on ajoute la lettre au résultat
+        for(int i = 0; i < motSecret.length(); i++) {
+            Lettre lettre = evaluationCaractere(essai.charAt(i), i); //on évalue le caractère pour le statut de la lettre
+            resultat.set(i,lettre); //on ajoute la lettre au résultat
         }
     }
 
@@ -49,11 +49,11 @@ public class Reponse {
     }
 
     // renvoie le statut du caractère
-    private Lettre evaluationCaractere(char carCourant) {
-        if (estPlace(carCourant)) { //si le carac courant est egal à la lettre à la position c'est placee
+    private Lettre evaluationCaractere(char carCourant, int pos) {
+        if (carCourant == motSecret.charAt(pos)) { //si le carac courant est egal à la lettre à la position c'est placee
             return Lettre.PLACEE;
         }
-        if (estPresent(carCourant)){ //si le carac courant est different de la lettre à la position c'est non placee
+        if (motSecret.contains(String.valueOf(carCourant))){ //si le carac courant est different de la lettre à la position c'est non placee
             return Lettre.NON_PLACEE;
         }
         return Lettre.INCORRECTE; //sinon c'est incorrecte
@@ -61,13 +61,13 @@ public class Reponse {
     }
 
     // le caractère est présent dans le mot secret
-    private boolean estPresent(char carCourant) {
-        return motSecret.contains(String.valueOf(carCourant));
-    }
+//    private boolean estPresent(char carCourant) {
+//        return motSecret.contains(String.valueOf(carCourant));
+//    }
 
     // le caractère est placé dans le mot secret
-    private boolean estPlace(char carCourant) {
-        return carCourant == motSecret.charAt(position);
-    }
+//    private boolean estPlace(char carCourant) {
+//        return carCourant == motSecret.charAt(position);
+//    }
 
 }
